@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 
-const MainHeader = () => {
+const MainHeader = (): JSX.Element => {
   return (
     <header className="bg-orange-400 text-white p-5 flex justify-between items-center md:px-16 lg:px-20">
       <Link href={"/"}>

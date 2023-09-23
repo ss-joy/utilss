@@ -1,5 +1,5 @@
 import Link from "next/link";
-export default function AllTools() {
+export default function AllTools(): JSX.Element {
   return (
     <main className="px-10">
       <ul className="flex flex-col justify-between items-center mt-14 md:flex-row md:px-20 md:flex-wrap md:mt-20">

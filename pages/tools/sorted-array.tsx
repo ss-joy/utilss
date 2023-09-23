@@ -1,37 +1,51 @@
-import { useState } from "react";
+/**
+ *
+ * Solve the loading component error
+ * cant see Loading  component when
+ * waiting for the array to be created
+ */
+import React, { useState } from "react";
 import createSortedArray from "@/utils/createSortedArray";
 import Loading from "@/components/ui/Loading";
-export default function SortedArrayPage() {
-  const [startValue, setStartValue] = useState("");
-  const [endValue, setEndValue] = useState("");
-  const [arrayStyle, setArrayStyle] = useState("styleJs");
-  const [arrayBox, setArrayBox] = useState(false);
+export default function SortedArrayPage(): JSX.Element {
+  const [startValue, setStartValue] = useState<number | "">("");
+  const [endValue, setEndValue] = useState<number | "">("");
+  const [arrayStyle, setArrayStyle] = useState<string>("styleJs");
+  const [arrayBox, setArrayBox] = useState<boolean>(false);
   const [textAreaValue, setTextAreaValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function onStartValueChange(e) {
+  function onStartValueChange(e: React.ChangeEvent<HTMLInputElement>) {
     setStartValue(+e.target.value);
   }
-  function onEndValueChange(e) {
+  function onEndValueChange(e: React.ChangeEvent<HTMLInputElement>) {
     setEndValue(+e.target.value);
   }
-  function onSelectChange(e) {
+  function onSelectChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setArrayStyle(e.target.value);
   }
-  function handleTextArea(e) {}
+  // function handleTextArea(e) {}
   function clearAllinputs() {
     setStartValue("");
     setEndValue("");
   }
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("form submitted");
     console.log(startValue, typeof startValue);
     console.log(endValue, typeof endValue);
 
-    setIsLoading(true);
-    const createdArray = createSortedArray(startValue, endValue);
-    setIsLoading(false);
+    setIsLoading((prev) => {
+      return true;
+    });
+    let createdArray: number[] = [];
+    if (startValue && endValue) {
+      createdArray = createSortedArray(startValue, endValue);
+    }
+    console.log(createdArray);
+    setIsLoading(() => {
+      return false;
+    });
     setArrayBox(true);
     setTextAreaValue(
       `${arrayStyle === "styleJs" ? "[" : "{"}${createdArray.toString()}${
@@ -63,7 +77,8 @@ export default function SortedArrayPage() {
             type="number"
             id="end-value"
             value={endValue}
-            min={`${startValue + 1}`}
+            // min={`${startValue + 1}`}
+            min={isNaN(startValue) ? Number(startValue) + 1 : startValue + 1}
             max={1000000}
           />
           <label htmlFor="array-style" className="labels">
@@ -94,11 +109,12 @@ export default function SortedArrayPage() {
           </button>
         </section>
       </form>
-      {isLoading ? (
+      {isLoading && !arrayBox ? (
         <Loading />
       ) : (
         <section>
           <textarea
+            rows={10}
             value={textAreaValue}
             type="text"
             onChange={handleTextArea}
@@ -106,7 +122,6 @@ export default function SortedArrayPage() {
           />
         </section>
       )}
-      {!isLoading && <Loading />}
     </div>
   );
 }
