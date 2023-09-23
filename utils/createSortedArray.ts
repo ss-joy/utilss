@@ -1,3 +1,4 @@
+//range: upto 90000000 element(s)
 export default function createSortedArray(
   startValue: number,
   endValue: number
