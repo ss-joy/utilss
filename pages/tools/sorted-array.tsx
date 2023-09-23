@@ -11,6 +11,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import createSortedArray from "@/utils/createSortedArray";
 import Loading from "@/components/ui/Loading";
+import Head from "next/head";
 export default function SortedArrayPage(): JSX.Element {
   const [startValue, setStartValue] = useState<number | "">("");
   const [endValue, setEndValue] = useState<number | "">("");
@@ -79,6 +80,9 @@ export default function SortedArrayPage(): JSX.Element {
   const MAX_SUPPORTED_NUMBER = 90000000;
   return (
     <div>
+      <Head>
+        <title>utilss | sorted array generator</title>
+      </Head>
       <h2 className="text-center">
         Currently you can generate numbers upto {MAX_SUPPORTED_NUMBER} elements.
       </h2>
