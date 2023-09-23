@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .orange-btn {
+    @apply bg-orange-500 p-4 w-44 text-center font-bold text-white text-xl rounded-md block mx-auto hover:bg-orange-200 hover:border-orange-700 hover:text-orange-900;
+  }
+  .inputs {
+    @apply border-4 block border-slate-600 rounded-md m-4;
+  }
+  .labels {
+    @apply block m-4 text-xl font-semibold;
+  }
+  .blue-btn {
+    @apply bg-blue-600 text-white p-2 rounded-md font-bold hover:bg-white hover:text-blue-900 border-blue-600 border-2 mx-4;
+  }
+}
