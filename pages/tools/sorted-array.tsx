@@ -83,28 +83,28 @@ export default function SortedArrayPage(): JSX.Element {
       <Head>
         <title>utilss | sorted array generator</title>
       </Head>
-      <h2 className="text-center">
+      <h2 className="text-center block shadow-lg rounded-md text-xl p-2 shadow-orange-400 bg-orange-500 mt-10 mx-8 text-white sm:text-3xl sm:mx-10">
         Currently you can generate numbers upto {MAX_SUPPORTED_NUMBER} elements.
       </h2>
       <form onSubmit={handleSubmit}>
-        <section className="flex justify-between p-12">
-          <label htmlFor="start-value" className="labels">
+        <section className="flex justify-between p-12 flex-col">
+          <label htmlFor="start-value" className="labels mx-1 sm:text-3xl">
             Elements starts from
           </label>
           <input
             onChange={onStartValueChange}
-            className="inputs out-of-range:bg-red-200 in-range:bg-green-200"
+            className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2"
             type="number"
             value={startValue}
             id="start-value"
             required
           />
-          <label htmlFor="end-value" className="labels">
+          <label htmlFor="end-value" className="labels mx-1 sm:text-3xl">
             Elements end at
           </label>
           <input
             onChange={onEndValueChange}
-            className="inputs out-of-range:bg-red-200 in-range:bg-green-200"
+            className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2"
             type="number"
             id="end-value"
             value={endValue}
@@ -117,12 +117,12 @@ export default function SortedArrayPage(): JSX.Element {
             }
             required
           />
-          <label htmlFor="array-style" className="labels">
+          <label htmlFor="array-style" className="labels mx-1 sm:text-3xl">
             Choose array style
           </label>
           <select
             name=""
-            className="px-8 rounded bg-orange-200 text-slate-600 font-bold"
+            className="px-8 rounded bg-orange-200 text-slate-600 font-bold h-14 sm:text-2xl"
             value={arrayStyle}
             onChange={onSelectChange}
             id="array-style"
@@ -131,13 +131,15 @@ export default function SortedArrayPage(): JSX.Element {
             <option value="styleJs">Javascript/Typescript Style</option>
           </select>
         </section>
-        <section className="flex justify-center mt-16">
-          <button className="blue-btn block mx-8 p-4">Create array here</button>
-          <button className="blue-btn block mx-8 p-4">
+        <section className="flex flex-col items-center mt-5 sm:text-2xl">
+          <button className="blue-btn block p-4 w-56 mb-4">
+            Create array here
+          </button>
+          <button className="blue-btn block p-4 w-56 mb-4">
             Download file with the array
           </button>
           <button
-            className="blue-btn bg-red-700 text-white block mx-8 p-4 border-4 border-red-700"
+            className="blue-btn bg-red-700 text-white p-4 border-4 border-red-700 w-56"
             type="button"
             onClick={clearAllinputs}
           >
