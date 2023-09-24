@@ -12,6 +12,8 @@ import React, { useEffect, useRef, useState } from "react";
 import createSortedArray from "@/utils/createSortedArray";
 import Loading from "@/components/ui/Loading";
 import Head from "next/head";
+import ClearButton from "@/components/ui/ClearButton";
+import CreateButton from "@/components/ui/CreateButton";
 export default function SortedArrayPage(): JSX.Element {
   const [startValue, setStartValue] = useState<number | "">("");
   const [endValue, setEndValue] = useState<number | "">("");
@@ -21,7 +23,6 @@ export default function SortedArrayPage(): JSX.Element {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
-    console.log("effect", textAreaValue);
     if (textAreaRef.current) {
       textAreaRef.current.value = textAreaValue;
     }
@@ -83,81 +84,82 @@ export default function SortedArrayPage(): JSX.Element {
       <Head>
         <title>utilss | sorted array generator</title>
       </Head>
-      <h2 className="text-center block shadow-lg rounded-md text-xl p-2 shadow-orange-400 bg-orange-500 mt-10 mx-8 text-white sm:text-3xl sm:mx-10">
+      <h2 className="text-center block shadow-lg rounded-md text-xl p-2 shadow-orange-400 bg-orange-500 mt-10 mx-8 text-white sm:text-3xl sm:mx-10 lg:text-4xl lg:mx-16 xl:mx-28">
         Currently you can generate numbers upto {MAX_SUPPORTED_NUMBER} elements.
       </h2>
-      <form onSubmit={handleSubmit}>
-        <section className="flex justify-between p-12 flex-col">
-          <label htmlFor="start-value" className="labels mx-1 sm:text-3xl">
-            Elements starts from
-          </label>
-          <input
-            onChange={onStartValueChange}
-            className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2"
-            type="number"
-            value={startValue}
-            id="start-value"
-            required
-          />
-          <label htmlFor="end-value" className="labels mx-1 sm:text-3xl">
-            Elements end at
-          </label>
-          <input
-            onChange={onEndValueChange}
-            className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2"
-            type="number"
-            id="end-value"
-            value={endValue}
-            //min has to be one greater than the start value
-            //so that it makes at least an array of two elements!
-            min={startValue === "" ? undefined : startValue + 1}
-            //start + MAX_SUPPORTED_NUMBER
-            max={
-              startValue === "" ? undefined : startValue + MAX_SUPPORTED_NUMBER
-            }
-            required
-          />
-          <label htmlFor="array-style" className="labels mx-1 sm:text-3xl">
-            Choose array style
-          </label>
-          <select
-            name=""
-            className="px-8 rounded bg-orange-200 text-slate-600 font-bold h-14 sm:text-2xl"
-            value={arrayStyle}
-            onChange={onSelectChange}
-            id="array-style"
-          >
-            <option value="styleC">C/C=++ Style</option>
-            <option value="styleJs">Javascript/Typescript Style</option>
-          </select>
-        </section>
-        <section className="flex flex-col items-center mt-5 sm:text-2xl">
-          <button className="blue-btn block p-4 w-56 mb-4">
-            Create array here
-          </button>
-          <button className="blue-btn block p-4 w-56 mb-4">
-            Download file with the array
-          </button>
-          <button
-            className="blue-btn bg-red-700 text-white p-4 border-4 border-red-700 w-56"
-            type="button"
-            onClick={clearAllinputs}
-          >
-            Clear inputs
-          </button>
-        </section>
-      </form>
+      <div className="2xl:flex 2xl:justify-around">
+        <form onSubmit={handleSubmit}>
+          <section className="flex justify-between p-12 flex-col">
+            <label
+              htmlFor="start-value"
+              className="labels mx-1 sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
+            >
+              Elements starts from
+            </label>
+            <input
+              onChange={onStartValueChange}
+              className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2 lg:mx-16 lg:text-4xl xl:mx-28"
+              type="number"
+              value={startValue}
+              id="start-value"
+              required
+            />
+            <label
+              htmlFor="end-value"
+              className="labels mx-1 sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
+            >
+              Elements end at
+            </label>
+            <input
+              onChange={onEndValueChange}
+              className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2 lg:mx-16 lg:text-4xl xl:mx-28"
+              type="number"
+              id="end-value"
+              value={endValue}
+              //min has to be one greater than the start value
+              //so that it makes at least an array of two elements!
+              min={startValue === "" ? undefined : startValue + 1}
+              //start + MAX_SUPPORTED_NUMBER
+              max={
+                startValue === ""
+                  ? undefined
+                  : startValue + MAX_SUPPORTED_NUMBER
+              }
+              required
+            />
+            <label
+              htmlFor="array-style"
+              className="labels mx-1 sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
+            >
+              Choose array style
+            </label>
+            <select
+              className="px-8 rounded bg-orange-200 text-slate-600 font-bold h-14 sm:text-2xl lg:mx-16 lg:text-4xl xl:mx-28"
+              value={arrayStyle}
+              onChange={onSelectChange}
+              id="array-style"
+            >
+              <option value="styleC">C/C=++ Style</option>
+              <option value="styleJs">Javascript/Typescript Style</option>
+            </select>
+          </section>
+          <section className="flex flex-col items-center mt-5 sm:text-2xl 2xl:flex-row 2xl:justify-center">
+            <CreateButton />
+            <ClearButton clearAllInputs={clearAllinputs} />
+          </section>
+        </form>
 
-      <section>
-        {arrayBox && (
-          <textarea
-            ref={textAreaRef}
-            rows={10}
-            className="inputs w-4/5 mx-auto mt-36 p-8 text-slate-600 font-semibold text-lg"
-            placeholder="Sorted array..."
-          />
-        )}
-      </section>
+        <section className="2xl:flex-grow">
+          {arrayBox && (
+            <textarea
+              ref={textAreaRef}
+              rows={10}
+              className="inputs w-4/5 mx-auto mt-36 p-8 text-slate-600 font-semibold text-lg lg:mt-12 xl:text-2xl 2xl:h-2/4 "
+              placeholder="Sorted array..."
+            />
+          )}
+        </section>
+      </div>
     </div>
   );
 }
