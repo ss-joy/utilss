@@ -1,5 +1,4 @@
 import ToolItemsList from "@/components/tools/ToolItemsList";
-import Link from "next/link";
 export default function AllTools(): JSX.Element {
   return (
     <main className="px-10">
