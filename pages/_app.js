@@ -1,4 +1,4 @@
-import MainHeader from "@/components/Home/MainHeader";
+import MainHeader from "@/components/ui/MainHeader";
 import "@/styles/globals.css";
 import Head from "next/head";
 
@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>utilss</title>
+        <title>utilss </title>
 
         <link
           rel="apple-touch-icon"
