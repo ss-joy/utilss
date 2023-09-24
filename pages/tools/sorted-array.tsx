@@ -14,6 +14,9 @@ import Loading from "@/components/ui/Loading";
 import Head from "next/head";
 import ClearButton from "@/components/ui/ClearButton";
 import CreateButton from "@/components/ui/CreateButton";
+import { MAX_SUPPORTED_NUMBER } from "@/utils/MAX_VALUE";
+import MaxInfoHeader from "@/components/shared/MaxInfoHeader";
+
 export default function SortedArrayPage(): JSX.Element {
   const [startValue, setStartValue] = useState<number | "">("");
   const [endValue, setEndValue] = useState<number | "">("");
@@ -78,15 +81,12 @@ export default function SortedArrayPage(): JSX.Element {
       }`
     );
   }
-  const MAX_SUPPORTED_NUMBER = 90000000;
   return (
     <div>
       <Head>
         <title>utilss | sorted array generator</title>
       </Head>
-      <h2 className="text-center block shadow-lg rounded-md text-xl p-2 shadow-orange-400 bg-orange-500 mt-10 mx-8 text-white sm:text-3xl sm:mx-10 lg:text-4xl lg:mx-16 xl:mx-28">
-        Currently you can generate numbers upto {MAX_SUPPORTED_NUMBER} elements.
-      </h2>
+      <MaxInfoHeader />
       <div className="2xl:flex 2xl:justify-around">
         <form onSubmit={handleSubmit}>
           <section className="flex justify-between p-12 flex-col">

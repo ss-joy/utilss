@@ -1,0 +1,1 @@
+export const MAX_SUPPORTED_NUMBER = 90000000;
