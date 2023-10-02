@@ -9,12 +9,12 @@ interface ToolItemsListProps {
 }
 const ToolItemsList = (props: ToolItemsListProps): JSX.Element => {
   return (
-    <ul className="flex flex-col justify-between items-center mt-14 md:flex-row md:px-20 md:flex-wrap md:mt-20">
+    <ul className="mt-14 flex flex-col items-center justify-between md:mt-20 md:flex-row md:flex-wrap md:px-20">
       {props.toolsLists.map((e, i) => {
         return (
           <li
             key={i}
-            className="h-20 text-center bg-orange-200 rounded-lg mb-10 p-5 text-lg sm:text-2xl font-bold text-slate-500 flex justify-center items-center"
+            className="mb-10 flex h-20 items-center justify-center rounded-lg bg-orange-200/50 p-5 text-center text-lg font-bold text-slate-500 shadow-lg shadow-orange-400 transition-all hover:shadow-xl hover:shadow-orange-400 sm:text-2xl"
           >
             <Link href={e.link}>{e.title}</Link>
           </li>

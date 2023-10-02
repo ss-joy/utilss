@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const MainHeader = (): JSX.Element => {
   return (
-    <header className="bg-orange-400 text-white p-5 flex justify-between items-center md:px-16 lg:px-20">
+    <header className="flex items-center justify-between bg-orange-400 p-5 text-white md:px-16 lg:px-20">
       <Link href={"/"}>
         <h1 className=" text-5xl">Utilss</h1>
       </Link>
