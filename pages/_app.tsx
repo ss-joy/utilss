@@ -1,8 +1,14 @@
+import type { AppProps } from "next/app";
 import MainHeader from "@/components/ui/MainHeader";
 import "@/styles/globals.css";
 import Head from "next/head";
+import { Ubuntu } from "next/font/google";
 
-export default function App({ Component, pageProps }) {
+const ubuntu = Ubuntu({
+  subsets: ["latin"],
+  weight: "400",
+});
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
