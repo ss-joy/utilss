@@ -158,7 +158,7 @@ export default function SortedArrayPage(): JSX.Element {
               rows={10}
               onChange={() => {}}
               value={textAreaValue}
-              className="inputs mx-auto mt-36 w-4/5 p-8 text-lg font-semibold text-slate-600 lg:mt-12 xl:text-2xl 2xl:h-2/4"
+              className="inputs mx-auto mt-14 w-4/5 p-2 text-lg font-semibold text-slate-600 lg:mt-12 xl:text-2xl 2xl:h-2/4 2xl:p-4"
               placeholder="Sorted array..."
             />
           )}
