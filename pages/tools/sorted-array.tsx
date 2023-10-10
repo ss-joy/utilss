@@ -1,35 +1,42 @@
 /**
- *
- * Solve the loading component error
- * cant see Loading  component when
- * waiting for the array to be created
- *
- *
- *
  * fix 0 appearance in inputs
  */
 import React, { useEffect, useRef, useState } from "react";
-import createSortedArray from "@/utils/createSortedArray";
 import Loading from "@/components/ui/Loading";
 import Head from "next/head";
 import ClearButton from "@/components/ui/ClearButton";
 import CreateButton from "@/components/ui/CreateButton";
 import { MAX_SUPPORTED_NUMBER } from "@/utils/MAX_VALUE";
 import MaxInfoHeader from "@/components/shared/MaxInfoHeader";
+import useFetch from "@/hooks/useFetch";
 
 export default function SortedArrayPage(): JSX.Element {
   const [startValue, setStartValue] = useState<number | "">("");
   const [endValue, setEndValue] = useState<number | "">("");
   const [arrayStyle, setArrayStyle] = useState<string>("styleJs");
-  const [arrayBox, setArrayBox] = useState<boolean>(false);
   const [textAreaValue, setTextAreaValue] = useState("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const { apiResponseData, error, isLoading, useFetchFunction } = useFetch({
+    url: "http://localhost:3000/api/tools/sorted-array",
+    method: "POST",
+    body: JSON.stringify({
+      startValue,
+      endValue,
+    }),
+  });
   useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.value = textAreaValue;
-    }
-  }, [textAreaValue]);
+    console.log("from effect api data", apiResponseData);
+    // main logic:
+    // setTextAreaValue(apiResponseData?.data.toString());
+
+    setTextAreaValue(
+      `${arrayStyle === "styleJs" ? "[" : "{"}${
+        apiResponseData?.data!.toString()
+          ? apiResponseData!.data!.toString()
+          : null
+      }${arrayStyle === "styleJs" ? "]" : "}"}`,
+    );
+  }, [apiResponseData]);
 
   function onStartValueChange(e: React.ChangeEvent<HTMLInputElement>) {
     setStartValue(+e.target.value);
@@ -44,16 +51,17 @@ export default function SortedArrayPage(): JSX.Element {
     setStartValue("");
     setEndValue("");
   }
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //ok
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(
-      "submitted",
-      startValue,
-      typeof startValue,
-      endValue,
-      typeof endValue
-    );
-
+    // console.log(
+    //   "submitted",
+    //   startValue,
+    //   typeof startValue,
+    //   endValue,
+    //   typeof endValue,
+    // );
+    //validation logic
     if (
       startValue === "" ||
       !endValue ||
@@ -63,23 +71,12 @@ export default function SortedArrayPage(): JSX.Element {
       return;
     }
 
-    // setIsLoading((prev) => {
-    //   return true;
-    // });
-    let createdArray: number[] = [];
+    useFetchFunction();
+  }
 
-    if (typeof startValue === "number" && typeof endValue === "number") {
-      createdArray = createSortedArray(startValue, endValue);
-    }
-    // setIsLoading(() => {
-    //   return false;
-    // });
-    setArrayBox(true);
-    setTextAreaValue(
-      `${arrayStyle === "styleJs" ? "[" : "{"}${createdArray.toString()}${
-        arrayStyle === "styleJs" ? "]" : "}"
-      }`
-    );
+  const showArrayBox = apiResponseData && !isLoading;
+  if (error) {
+    <p>Oh noo errror!!!</p>;
   }
   return (
     <div>
@@ -89,7 +86,7 @@ export default function SortedArrayPage(): JSX.Element {
       <MaxInfoHeader />
       <div className="2xl:flex 2xl:justify-around">
         <form onSubmit={handleSubmit}>
-          <section className="flex justify-between p-12 flex-col">
+          <section className="flex flex-col justify-between p-12">
             <label
               htmlFor="start-value"
               className="labels mx-1 sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
@@ -98,7 +95,7 @@ export default function SortedArrayPage(): JSX.Element {
             </label>
             <input
               onChange={onStartValueChange}
-              className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2 lg:mx-16 lg:text-4xl xl:mx-28"
+              className="inputs mx-2 in-range:bg-green-200 out-of-range:bg-red-200 lg:mx-16 lg:text-4xl xl:mx-28"
               type="number"
               value={startValue}
               id="start-value"
@@ -112,7 +109,7 @@ export default function SortedArrayPage(): JSX.Element {
             </label>
             <input
               onChange={onEndValueChange}
-              className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2 lg:mx-16 lg:text-4xl xl:mx-28"
+              className="inputs mx-2 in-range:bg-green-200 out-of-range:bg-red-200 lg:mx-16 lg:text-4xl xl:mx-28"
               type="number"
               id="end-value"
               value={endValue}
@@ -134,7 +131,7 @@ export default function SortedArrayPage(): JSX.Element {
               Choose array style
             </label>
             <select
-              className="px-8 rounded bg-orange-200 text-slate-600 font-bold h-14 sm:text-2xl lg:mx-16 lg:text-4xl xl:mx-28"
+              className="h-14 rounded bg-orange-200 px-8 font-bold text-slate-600 sm:text-2xl lg:mx-16 lg:text-4xl xl:mx-28"
               value={arrayStyle}
               onChange={onSelectChange}
               id="array-style"
@@ -143,18 +140,25 @@ export default function SortedArrayPage(): JSX.Element {
               <option value="styleJs">Javascript/Typescript Style</option>
             </select>
           </section>
-          <section className="flex flex-col items-center mt-5 sm:text-2xl 2xl:flex-row 2xl:justify-center">
-            <CreateButton />
-            <ClearButton clearAllInputs={clearAllinputs} />
+          <section className="mt-5 flex flex-col items-center sm:text-2xl 2xl:flex-row 2xl:justify-center">
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <>
+                <CreateButton />
+                <ClearButton clearAllInputs={clearAllinputs} />
+              </>
+            )}
           </section>
         </form>
 
         <section className="2xl:flex-grow">
-          {arrayBox && (
+          {showArrayBox && (
             <textarea
-              ref={textAreaRef}
               rows={10}
-              className="inputs w-4/5 mx-auto mt-36 p-8 text-slate-600 font-semibold text-lg lg:mt-12 xl:text-2xl 2xl:h-2/4 "
+              onChange={() => {}}
+              value={textAreaValue}
+              className="inputs mx-auto mt-36 w-4/5 p-8 text-lg font-semibold text-slate-600 lg:mt-12 xl:text-2xl 2xl:h-2/4"
               placeholder="Sorted array..."
             />
           )}
