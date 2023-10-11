@@ -86,7 +86,7 @@ export default function SortedArrayPage(): JSX.Element {
       <MaxInfoHeader />
       <div className="2xl:flex 2xl:justify-around">
         <form onSubmit={handleSubmit}>
-          <section className="flex flex-col justify-between p-12">
+          <section className="flex flex-col justify-between px-12 py-2">
             <label
               htmlFor="start-value"
               className="labels mx-1 sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
@@ -126,7 +126,7 @@ export default function SortedArrayPage(): JSX.Element {
             />
             <label
               htmlFor="array-style"
-              className="labels mx-1 sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
+              className="labels mx-1 shadow-md sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
             >
               Choose array style
             </label>
@@ -136,8 +136,10 @@ export default function SortedArrayPage(): JSX.Element {
               onChange={onSelectChange}
               id="array-style"
             >
-              <option value="styleC">C/C=++ Style</option>
-              <option value="styleJs">Javascript/Typescript Style</option>
+              <option value="styleC">C/C=++ Style {"{ }"}</option>
+              <option value="styleJs">
+                Javascript/Typescript Style {"[ ]"}
+              </option>
             </select>
           </section>
           <section className="mt-5 flex flex-col items-center sm:text-2xl 2xl:flex-row 2xl:justify-center">

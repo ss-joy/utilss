@@ -52,7 +52,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
       startValue,
       typeof startValue,
       endValue,
-      typeof endValue
+      typeof endValue,
     );
 
     if (
@@ -79,7 +79,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
     setTextAreaValue(
       `${arrayStyle === "styleJs" ? "[" : "{"}${createdArray.toString()}${
         arrayStyle === "styleJs" ? "]" : "}"
-      }`
+      }`,
     );
   }
 
@@ -92,7 +92,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
       <MaxInfoHeader />
       <div className="2xl:flex 2xl:justify-around">
         <form onSubmit={handleSubmit}>
-          <section className="flex justify-between p-12 flex-col">
+          <section className="flex flex-col justify-between p-12">
             <label
               htmlFor="start-value"
               className="labels mx-1 sm:text-3xl lg:mx-16 lg:text-4xl xl:mx-28"
@@ -101,7 +101,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
             </label>
             <input
               onChange={onStartValueChange}
-              className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2 lg:mx-16 lg:text-4xl xl:mx-28"
+              className="inputs mx-2 in-range:bg-green-200 out-of-range:bg-red-200 lg:mx-16 lg:text-4xl xl:mx-28"
               type="number"
               value={startValue}
               id="start-value"
@@ -115,7 +115,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
             </label>
             <input
               onChange={onEndValueChange}
-              className="inputs out-of-range:bg-red-200 in-range:bg-green-200 mx-2 lg:mx-16 lg:text-4xl xl:mx-28"
+              className="inputs mx-2 in-range:bg-green-200 out-of-range:bg-red-200 lg:mx-16 lg:text-4xl xl:mx-28"
               type="number"
               id="end-value"
               value={endValue}
@@ -137,7 +137,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
               Choose array style
             </label>
             <select
-              className="px-8 rounded bg-orange-200 text-slate-600 font-bold h-14 sm:text-2xl lg:mx-16 lg:text-4xl xl:mx-28"
+              className="h-14 rounded bg-orange-200 px-8 font-bold text-slate-600 sm:text-2xl lg:mx-16 lg:text-4xl xl:mx-28"
               value={arrayStyle}
               onChange={onSelectChange}
               id="array-style"
@@ -146,7 +146,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
               <option value="styleJs">Javascript/Typescript Style</option>
             </select>
           </section>
-          <section className="flex flex-col items-center mt-5 sm:text-2xl 2xl:flex-row 2xl:justify-center">
+          <section className="mt-5 flex flex-col items-center sm:text-2xl 2xl:flex-row 2xl:justify-center">
             <CreateButton />
             <ClearButton clearAllInputs={clearAllinputs} />
           </section>
@@ -157,7 +157,7 @@ const UnsortedArrrayPage = (): JSX.Element => {
             <textarea
               ref={textAreaRef}
               rows={10}
-              className="inputs w-4/5 mx-auto mt-36 p-8 text-slate-600 font-semibold text-lg lg:mt-12 xl:text-2xl 2xl:h-2/4 "
+              className="inputs mx-auto mt-36 w-4/5 p-8 text-lg font-semibold text-slate-600 lg:mt-12 xl:text-2xl 2xl:h-2/4 "
               placeholder="Sorted array..."
             />
           )}
