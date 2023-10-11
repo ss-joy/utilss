@@ -9,6 +9,7 @@ import CreateButton from "@/components/ui/CreateButton";
 import { MAX_SUPPORTED_NUMBER } from "@/utils/MAX_VALUE";
 import MaxInfoHeader from "@/components/shared/MaxInfoHeader";
 import useFetch from "@/hooks/useFetch";
+import Count from "@/components/shared/Count";
 
 export default function SortedArrayPage(): JSX.Element {
   const [startValue, setStartValue] = useState<number | "">("");
@@ -17,7 +18,7 @@ export default function SortedArrayPage(): JSX.Element {
   const [textAreaValue, setTextAreaValue] = useState("");
 
   const { apiResponseData, error, isLoading, useFetchFunction } = useFetch({
-    url: "http://localhost:3000/api/tools/sorted-array",
+    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}tools/sorted-array`,
     method: "POST",
     body: JSON.stringify({
       startValue,
@@ -142,15 +143,18 @@ export default function SortedArrayPage(): JSX.Element {
               </option>
             </select>
           </section>
-          <section className="mt-5 flex flex-col items-center sm:text-2xl 2xl:flex-row 2xl:justify-center">
-            {isLoading ? (
-              <Loading />
-            ) : (
-              <>
-                <CreateButton />
-                <ClearButton clearAllInputs={clearAllinputs} />
-              </>
-            )}
+          <section className="mt-5 flex flex-col items-center sm:flex-row sm:justify-evenly sm:text-2xl 2xl:flex-row 2xl:justify-evenly">
+            <Count start={startValue} end={endValue} />
+            <div id="buttons-holder">
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  <CreateButton />
+                  <ClearButton clearAllInputs={clearAllinputs} />
+                </>
+              )}
+            </div>
           </section>
         </form>
 
