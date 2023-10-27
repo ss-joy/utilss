@@ -1,5 +1,5 @@
 import { customApiResponse } from "@/types/custom-api-response";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 type useFetchProps = {
   url: string;
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -10,6 +10,12 @@ export default function useFetch({ url, method, body }: useFetchProps) {
     useState<customApiResponse | null>(null);
   const [error, setError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showErrorToast, setShowErrorToast] = useState<boolean>(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setShowErrorToast(false);
+    }, 3000);
+  }, [showErrorToast]);
   async function fetchData() {
     setError(null);
     setIsLoading(true);
@@ -34,6 +40,7 @@ export default function useFetch({ url, method, body }: useFetchProps) {
           ? e.message
           : "Something happended on the server. Please try again.",
       );
+      setShowErrorToast(true);
       return;
     }
   }
@@ -42,5 +49,6 @@ export default function useFetch({ url, method, body }: useFetchProps) {
     error,
     isLoading,
     fetchData,
+    showErrorToast,
   };
 }

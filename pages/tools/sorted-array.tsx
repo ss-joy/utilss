@@ -1,7 +1,7 @@
 /**
  * fix 0 appearance in inputs
  */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "@/components/ui/Loading";
 import Head from "next/head";
 import ClearButton from "@/components/ui/ClearButton";
@@ -10,21 +10,24 @@ import { MAX_SUPPORTED_NUMBER } from "@/utils/MAX_VALUE";
 import MaxInfoHeader from "@/components/shared/MaxInfoHeader";
 import useFetch from "@/hooks/useFetch";
 import Count from "@/components/shared/Count";
+import ErrorToast from "@/components/ui/ErrorToast";
 
 export default function SortedArrayPage(): JSX.Element {
   const [startValue, setStartValue] = useState<number | "">("");
   const [endValue, setEndValue] = useState<number | "">("");
   const [arrayStyle, setArrayStyle] = useState<string>("styleJs");
   const [textAreaValue, setTextAreaValue] = useState("");
+  const { apiResponseData, error, isLoading, fetchData, showErrorToast } =
+    useFetch({
+      url: `${process.env.NEXT_PUBLIC_BASE_API_URL}tools/sorted-array`,
 
-  const { apiResponseData, error, isLoading, useFetchFunction } = useFetch({
-    url: `${process.env.NEXT_PUBLIC_BASE_API_URL}tools/sorted-array`,
-    method: "POST",
-    body: JSON.stringify({
-      startValue,
-      endValue,
-    }),
-  });
+      method: "POST",
+      body: JSON.stringify({
+        startValue,
+        endValue,
+      }),
+    });
+  console.log(error);
   useEffect(() => {
     console.log("from effect api data", apiResponseData);
     // main logic:
@@ -52,7 +55,7 @@ export default function SortedArrayPage(): JSX.Element {
     setStartValue("");
     setEndValue("");
   }
-  //ok
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // console.log(
@@ -72,19 +75,22 @@ export default function SortedArrayPage(): JSX.Element {
       return;
     }
 
-    useFetchFunction();
+    fetchData();
   }
 
   const showArrayBox = apiResponseData && !isLoading;
-  if (error) {
-    <p>Oh noo errror!!!</p>;
-  }
+
+  useEffect(() => {
+    setTimeout(() => {}, 3000);
+  });
   return (
     <div>
       <Head>
         <title>utilss | sorted array generator</title>
       </Head>
+
       <MaxInfoHeader />
+      {showErrorToast && <ErrorToast text={error} />}
       <div className="2xl:flex 2xl:justify-around">
         <form onSubmit={handleSubmit}>
           <section className="flex flex-col justify-between px-12 py-2">
