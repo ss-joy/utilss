@@ -9,7 +9,7 @@ interface ToolItemsListProps {
 }
 const ToolItemsList = (props: ToolItemsListProps): JSX.Element => {
   return (
-    <ul className="mt-14 flex flex-col items-center justify-between md:mt-20 md:flex-row md:flex-wrap md:px-20">
+    <ul className="mt-14 flex flex-col items-start justify-between md:mt-20 md:flex-row md:flex-wrap md:px-20">
       {props.toolsLists.map((e, i) => {
         return (
           <li
