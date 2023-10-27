@@ -1,5 +1,5 @@
 import { customApiResponse } from "@/types/custom-api-response";
-import React, { useState } from "react";
+import { useState } from "react";
 type useFetchProps = {
   url: string;
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -10,30 +10,37 @@ export default function useFetch({ url, method, body }: useFetchProps) {
     useState<customApiResponse | null>(null);
   const [error, setError] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  async function useFetchFunction() {
+  async function fetchData() {
     setError(null);
     setIsLoading(true);
-    console.log("api called");
-    const response = await fetch(url, {
-      method: method,
-      body: body,
-    });
-    let errorData;
-    if (!response.ok) {
-      errorData = await response.json();
-      console.log(errorData);
-      setError(errorData.message);
+
+    try {
+      const apiResp = await fetch(url, {
+        method: method ? method : "GET",
+        body: body ? body : null,
+      });
+      let errorData;
+      if (!apiResp.ok) {
+        errorData = await apiResp.json();
+        throw new Error(errorData.message);
+      }
+      const parsedResponse = await apiResp.json();
+      setApiResponseData(parsedResponse);
       setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      setError(
+        e.message
+          ? e.message
+          : "Something happended on the server. Please try again.",
+      );
       return;
     }
-    const parsedResponse = await response.json();
-    setApiResponseData(parsedResponse);
-    setIsLoading(false);
   }
   return {
     apiResponseData,
     error,
     isLoading,
-    useFetchFunction,
+    fetchData,
   };
 }
